@@ -21,7 +21,7 @@
 namespace obr {
 namespace {
 
-constexpr absl::string_view kTestDataDir = "obr/cli/testdata/";
+const std::filesystem::path kTestDataDir = std::filesystem::path("obr") / "cli" / "testdata";
 constexpr absl::string_view kNoObaMetadata = "";
 constexpr size_t kBufferSize = 256;
 

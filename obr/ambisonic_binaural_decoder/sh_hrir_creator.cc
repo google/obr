@@ -16,7 +16,7 @@
 #include "absl/log/check.h"
 #include "absl/log/die_if_null.h"
 #include "absl/log/log.h"
-#include "obr/ambisonic_binaural_decoder/binaural_filters.h"
+#include "obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_wrapper.h"
 #include "obr/ambisonic_binaural_decoder/planar_interleaved_conversion.h"
 #include "obr/ambisonic_binaural_decoder/resampler.h"
 #include "obr/ambisonic_binaural_decoder/wav.h"
@@ -61,7 +61,7 @@ std::unique_ptr<AudioBuffer> CreateShHrirsFromWav(const Wav& wav,
 std::unique_ptr<AudioBuffer> CreateShHrirsFromAssets(
     const std::string& filename, int target_sample_rate_hz,
     Resampler* resampler) {
-  BinauralFilters hrtf_assets;
+  BinauralFiltersWrapper hrtf_assets;
   std::unique_ptr<std::string> sh_hrir_data = hrtf_assets.GetFile(filename);
 
   // Check if the asset was found.

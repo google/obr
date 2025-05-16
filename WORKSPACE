@@ -21,6 +21,6 @@ git_repository(
 git_repository(
     name = "pffft",
     build_file = "pffft.BUILD",
-    commit = "180c2d62717c0150d8aebd165fce19ee4e5f86f9",
+    commit = "d7a4c0206a29423478776d6b23a37bbb308f21d5",
     remote = "https://bitbucket.org/jpommier/pffft.git",
 )

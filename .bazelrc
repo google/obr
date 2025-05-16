@@ -2,6 +2,8 @@
 # use it. Starting with bazel 8, this flag flips to default false.
 common --enable_workspace
 
+build --enable_runfiles
+
 # Use the default C++ toolchain to build the tools used during the
 # build.
 build --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
@@ -18,4 +20,5 @@ build:macos --cxxopt=-std=c++20
 build:macos --cxxopt=-Wno-sign-compare
 
 build:windows --cxxopt=-std:c++20
+build:windows --linkopt=/STACK:8388608
 startup --windows_enable_symlinks
