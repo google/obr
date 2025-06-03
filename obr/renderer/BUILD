@@ -43,6 +43,7 @@ cc_library(
         "//obr/ambisonic_binaural_decoder:resampler",
         "//obr/ambisonic_binaural_decoder:sh_hrir_creator",
         "//obr/ambisonic_encoder",
+        "//obr/ambisonic_rotator",
         "//obr/audio_buffer",
         "//obr/common",
         "//obr/peak_limiter",
