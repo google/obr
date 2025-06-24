@@ -45,6 +45,8 @@ namespace {
 ObrImpl::ObrImpl(int buffer_size_per_channel, int sampling_rate)
     : buffer_size_per_channel_(buffer_size_per_channel),
       sampling_rate_(sampling_rate),
+      head_tracking_enabled_(false),
+      world_rotation_(WorldRotation()),
       fft_manager_(buffer_size_per_channel_) {
   CHECK_GT(buffer_size_per_channel_, 0);
   CHECK_GT(sampling_rate_, 0);
@@ -64,6 +66,7 @@ absl::Status ObrImpl::ResetDsp() {
   sh_hrirs_R_.reset();
   ambisonic_encoder_.reset();
   peak_limiter_.reset();
+  ambisonic_rotator_.reset();
 
   // Clear buffers.
   ambisonic_mix_bed_.Clear();
@@ -119,6 +122,9 @@ absl::Status ObrImpl::InitializeDsp() {
         std::make_unique<AmbisonicEncoder>(indices.size(), order);
     RETURN_IF_NOT_OK(UpdateAmbisonicEncoder());
   }
+
+  // Initialize HOA rotator.
+  ambisonic_rotator_ = std::make_unique<AmbisonicRotator>(order);
 
   // Initialize Ambisonic binaural decoder.
   // Load filters matching the selected operational Ambisonic order.
@@ -176,6 +182,12 @@ void ObrImpl::Process(const AudioBuffer& input_buffer,
             input_buffer[audio_element.GetFirstChannelIndex() + channel];
       }
     }
+  }
+
+  if (head_tracking_enabled_) {
+    // Pass Ambisonic mix bed through Ambisonic Rotator.
+    ambisonic_rotator_->Process(world_rotation_, ambisonic_mix_bed_,
+                          &ambisonic_mix_bed_);
   }
 
   // Pass Ambisonic mix bed through Ambisonic Binaural Decoder.
@@ -337,6 +349,16 @@ absl::Status ObrImpl::UpdateObjectPosition(size_t audio_element_index,
   }
 
   RETURN_IF_NOT_OK(UpdateAmbisonicEncoder());
+
+  return absl::OkStatus();
+}
+
+void ObrImpl::EnableHeadTracking(bool enable_head_tracking) {
+  head_tracking_enabled_ = enable_head_tracking;
+}
+
+absl::Status ObrImpl::SetHeadRotation(float w, float x, float y, float z) {
+  world_rotation_ = WorldRotation(w, x, y, z);
 
   return absl::OkStatus();
 }
