@@ -49,13 +49,31 @@ add_library(pffft STATIC
 
 # Collect all source files.
 file(GLOB SourceFiles CONFIGURE_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/**/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/**/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/binaural_filters/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/binaural_filters/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_encoder/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_encoder/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_rotator/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_rotator/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/audio_buffer/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/audio_buffer/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/peak_limiter/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/peak_limiter/*.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/renderer/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/renderer/*.cc"
+
 )
 
 # Exclude the following files / directories.
-list(FILTER SourceFiles EXCLUDE REGEX ".*test_util\\.(h|cc)")
-list(FILTER SourceFiles EXCLUDE REGEX ".*/cli/.*")
+list(REMOVE_ITEM SourceFiles
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/test_util.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/test_util.cc"
+)
+
 
 # Define obr library target.
 add_library(obr STATIC)
