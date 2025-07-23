@@ -47,33 +47,85 @@ add_library(pffft STATIC
         ${pffft_SOURCE_DIR}/pffft.c
 )
 
-# Collect all source files.
-file(GLOB SourceFiles CONFIGURE_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/binaural_filters/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_binaural_decoder/binaural_filters/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_encoder/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_encoder/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_rotator/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/ambisonic_rotator/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/audio_buffer/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/audio_buffer/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/peak_limiter/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/peak_limiter/*.cc"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/renderer/*.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/renderer/*.cc"
-
+# Manually list all source files.
+set(SourceFiles
+        obr/ambisonic_binaural_decoder/ambisonic_binaural_decoder.cc
+        obr/ambisonic_binaural_decoder/ambisonic_binaural_decoder.h
+        obr/ambisonic_binaural_decoder/dsp_utils.cc
+        obr/ambisonic_binaural_decoder/dsp_utils.h
+        obr/ambisonic_binaural_decoder/fft_manager.cc
+        obr/ambisonic_binaural_decoder/fft_manager.h
+        obr/ambisonic_binaural_decoder/partitioned_fft_filter.cc
+        obr/ambisonic_binaural_decoder/partitioned_fft_filter.h
+        obr/ambisonic_binaural_decoder/planar_interleaved_conversion.cc
+        obr/ambisonic_binaural_decoder/planar_interleaved_conversion.h
+        obr/ambisonic_binaural_decoder/resampler.cc
+        obr/ambisonic_binaural_decoder/resampler.h
+        obr/ambisonic_binaural_decoder/sample_type_conversion.cc
+        obr/ambisonic_binaural_decoder/sample_type_conversion.h
+        obr/ambisonic_binaural_decoder/sh_hrir_creator.cc
+        obr/ambisonic_binaural_decoder/sh_hrir_creator.h
+        obr/ambisonic_binaural_decoder/wav.cc
+        obr/ambisonic_binaural_decoder/wav.h
+        obr/ambisonic_binaural_decoder/wav_reader.cc
+        obr/ambisonic_binaural_decoder/wav_reader.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_1_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_1_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_1_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_1_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_2_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_2_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_2_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_2_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_3_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_3_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_3_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_3_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_4_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_4_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_4_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_4_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_5_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_5_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_5_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_5_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_6_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_6_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_6_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_6_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_7_oa_l.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_7_oa_l.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_7_oa_r.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_7_oa_r.h
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_wrapper.cc
+        obr/ambisonic_binaural_decoder/binaural_filters/binaural_filters_wrapper.h
+        obr/ambisonic_encoder/ambisonic_encoder.cc
+        obr/ambisonic_encoder/ambisonic_encoder.h
+        obr/ambisonic_encoder/associated_legendre_polynomials_generator.cc
+        obr/ambisonic_encoder/associated_legendre_polynomials_generator.h
+        obr/ambisonic_rotator/ambisonic_rotator.cc
+        obr/ambisonic_rotator/ambisonic_rotator.h
+        obr/audio_buffer/audio_buffer.cc
+        obr/audio_buffer/audio_buffer.h
+        obr/audio_buffer/aligned_allocator.h
+        obr/audio_buffer/channel_view.cc
+        obr/audio_buffer/channel_view.h
+        obr/audio_buffer/simd_macros.h
+        obr/audio_buffer/simd_utils.cc
+        obr/audio_buffer/simd_utils.h
+        obr/common/ambisonic_utils.h
+        obr/common/constants.h
+        obr/common/misc_math.h
+        obr/peak_limiter/peak_limiter.cc
+        obr/peak_limiter/peak_limiter.h
+        obr/renderer/audio_element_config.cc
+        obr/renderer/audio_element_config.h
+        obr/renderer/audio_element_type.h
+        obr/renderer/input_channel_config.h
+        obr/renderer/loudspeaker_layouts.h
+        obr/renderer/obr_impl.cc
+        obr/renderer/obr_impl.h
 )
-
-# Exclude the following files / directories.
-list(REMOVE_ITEM SourceFiles
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/test_util.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/obr/common/test_util.cc"
-)
-
 
 # Define obr library target.
 add_library(obr STATIC)
