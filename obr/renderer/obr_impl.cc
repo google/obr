@@ -70,7 +70,7 @@ absl::Status ObrImpl::ResetDsp() {
   LOG(INFO) << "Resetting DSP.";
 
   // Enable the lock.
-  absl::MutexLock lock(mutex_);
+  absl::MutexLock lock(&mutex_);
 
   // Release resources.
   ambisonic_binaural_decoder_.reset();
@@ -116,7 +116,7 @@ absl::Status ObrImpl::InitializeDsp() {
   RETURN_IF_NOT_OK(ResetDsp());
 
   // Enable the lock.
-  absl::MutexLock lock(mutex_);
+  absl::MutexLock lock(&mutex_);
 
   // Setup Ambisonic mix bed.
   ambisonic_mix_bed_ =
@@ -187,7 +187,7 @@ void ObrImpl::Process(const AudioBuffer& input_buffer,
   CHECK_EQ(output_buffer->num_frames(), buffer_size_per_channel_);
 
   // Enable the lock.
-  absl::MutexLock lock(mutex_);
+  absl::MutexLock lock(&mutex_);
 
   // Pass audio through Ambisonic Encoder and render to Ambisonic
   // mix bed.

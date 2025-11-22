@@ -49,7 +49,7 @@ std::unique_ptr<std::string> BinauralFiltersWrapper::GetFile(
     const std::string& filename) const {
   using AssetMap =
       std::unordered_map<std::string,
-                         std::function<std::vector<unsigned char>()>>;
+                         std::function<std::span<const unsigned char>()>>;
   static const AssetMap kAssetMap = [] {
     return AssetMap{
         {"1OAAmbientL", filter_files::BinauralFilters1OAAmbientL},

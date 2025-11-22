@@ -9,12 +9,12 @@
 #ifndef BINAURAL_FILTERS_2_OA_AMBIENT_R_H_
 #define BINAURAL_FILTERS_2_OA_AMBIENT_R_H_
 
-#include <vector>
+#include <span>
 
 namespace obr {
 namespace filter_files {
 
-std::vector<unsigned char> BinauralFilters2OAAmbientR();
+std::span<const unsigned char> BinauralFilters2OAAmbientR();
 
 }  // namespace filter_files
 }  // namespace obr

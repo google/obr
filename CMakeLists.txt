@@ -19,7 +19,7 @@ include(FetchContent)
 FetchContent_Declare(
         absl
         GIT_REPOSITORY https://github.com/abseil/abseil-cpp.git
-        GIT_TAG d38452e1ee03523a208362186fd42248ff2609f6
+        GIT_TAG 20250512.1
 )
 FetchContent_MakeAvailable(absl)
 

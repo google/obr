@@ -9,12 +9,12 @@
 #ifndef BINAURAL_FILTERS_4_OA_DIRECT_R_H_
 #define BINAURAL_FILTERS_4_OA_DIRECT_R_H_
 
-#include <vector>
+#include <span>
 
 namespace obr {
 namespace filter_files {
 
-std::vector<unsigned char> BinauralFilters4OADirectR();
+std::span<const unsigned char> BinauralFilters4OADirectR();
 
 }  // namespace filter_files
 }  // namespace obr
